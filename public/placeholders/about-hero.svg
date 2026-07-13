@@ -1,0 +1,28 @@
+<svg viewBox="0 0 1400 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1414"/>
+      <stop offset="100%" stop-color="#2a2020"/>
+    </linearGradient>
+    <linearGradient id="bottle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2c2424"/>
+      <stop offset="100%" stop-color="#111111"/>
+    </linearGradient>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+  </defs>
+  <rect width="1400" height="1000" fill="url(#bg)"/>
+  <circle cx="1120" cy="180" r="420" fill="#c8a96a" opacity="0.20" filter="url(#soft)"/>
+  <circle cx="210" cy="820" r="476.00000000000006" fill="#4a3a3a" opacity="0.16" filter="url(#soft)"/>
+  <g transform="translate(700,560)">
+    <ellipse cx="0" cy="260" rx="224" ry="42" fill="#000" opacity="0.08"/>
+    <rect x="-88.2" y="-290" width="176.4" height="58" rx="8" fill="#c8a96a"/>
+    <rect x="-37.8" y="-240" width="75.6" height="50" fill="#c8a96a" opacity="0.85"/>
+    <rect x="-221.2" y="-190" width="442.4" height="450" rx="20" fill="url(#bottle)" stroke="#c8a96a" stroke-width="2" opacity="0.95"/>
+    <rect x="-140" y="-50" width="280" height="100" rx="4" fill="rgba(255,255,255,0.88)" stroke="#c8a96a" stroke-width="1.5"/>
+    <text x="0" y="-6" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="32" fill="#111111">A</text>
+    <text x="0" y="24" text-anchor="middle" font-family="Georgia, serif" font-size="11" letter-spacing="3" fill="#111111" opacity="0.75">ALMERA</text>
+  </g>
+  <text x="700" y="940" text-anchor="middle" font-family="Georgia, serif" font-size="16" letter-spacing="4" fill="#f6e6e7" opacity="0.7">Our Story</text>
+</svg>

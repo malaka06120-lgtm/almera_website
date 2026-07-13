@@ -1,0 +1,169 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Almera brand palette */
+  --color-almera-blush: var(--almera-blush);
+  --color-almera-blush-soft: var(--almera-blush-soft);
+  --color-almera-black: var(--almera-black);
+  --color-almera-white: var(--almera-white);
+  --color-almera-gold: var(--almera-gold);
+  --color-almera-gold-soft: var(--almera-gold-soft);
+  --color-almera-border: var(--almera-border);
+  --color-almera-charcoal: var(--almera-charcoal);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 12px);
+
+  --animate-fade-in: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Almera brand palette (exact brand hex values) */
+  --almera-blush: #f6e6e7;
+  --almera-blush-soft: #fbf1f1;
+  --almera-black: #111111;
+  --almera-white: #ffffff;
+  --almera-gold: #c8a96a;
+  --almera-gold-soft: #e7d8b8;
+  --almera-border: #e9dddd;
+  --almera-charcoal: #241d1d;
+
+  --background: var(--almera-blush);
+  --foreground: var(--almera-black);
+  --card: var(--almera-white);
+  --card-foreground: var(--almera-black);
+  --popover: var(--almera-white);
+  --popover-foreground: var(--almera-black);
+  --primary: var(--almera-black);
+  --primary-foreground: var(--almera-white);
+  --secondary: var(--almera-white);
+  --secondary-foreground: var(--almera-black);
+  --muted: var(--almera-blush-soft);
+  --muted-foreground: #7a6b6b;
+  --accent: var(--almera-gold);
+  --accent-foreground: var(--almera-black);
+  --destructive: oklch(0.55 0.18 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: var(--almera-border);
+  --input: var(--almera-border);
+  --ring: var(--almera-gold);
+}
+
+.dark {
+  --background: var(--almera-charcoal);
+  --foreground: var(--almera-blush);
+  --card: #2c2424;
+  --card-foreground: var(--almera-blush);
+  --popover: #2c2424;
+  --popover-foreground: var(--almera-blush);
+  --primary: var(--almera-gold);
+  --primary-foreground: var(--almera-black);
+  --secondary: #352b2b;
+  --secondary-foreground: var(--almera-blush);
+  --muted: #322929;
+  --muted-foreground: #b8a3a3;
+  --accent: var(--almera-gold);
+  --accent-foreground: var(--almera-black);
+  --destructive: oklch(0.6 0.19 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--almera-gold);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/50 dark:bg-black/30 dark:border-white/10;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .tracking-luxury {
+    letter-spacing: 0.22em;
+  }
+  .shadow-luxury {
+    box-shadow: 0 20px 60px -20px rgba(17, 17, 17, 0.16);
+  }
+  .shadow-luxury-sm {
+    box-shadow: 0 8px 30px -12px rgba(17, 17, 17, 0.14);
+  }
+  .border-gold {
+    border-color: var(--almera-gold);
+  }
+  .gold-shimmer {
+    background: linear-gradient(
+      110deg,
+      var(--almera-gold) 0%,
+      #f1e2bd 40%,
+      var(--almera-gold) 60%,
+      var(--almera-gold) 100%
+    );
+    background-size: 200% 100%;
+  }
+}
