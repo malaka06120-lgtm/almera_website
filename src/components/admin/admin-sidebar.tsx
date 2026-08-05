@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -8,11 +9,20 @@ import {
   ShoppingCart,
   LogOut,
   Store,
+  Menu,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { logout } from "@/lib/actions/auth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { AlmeraLogo } from "@/components/shared/almera-logo";
 
 const LINKS = [
@@ -21,13 +31,19 @@ const LINKS = [
   { href: "/admin/orders", label: "Orders", icon: ShoppingCart },
 ];
 
-export function AdminSidebar({ adminEmail }: { adminEmail: string }) {
+function AdminNavContent({
+  adminEmail,
+  onNavigate,
+}: {
+  adminEmail: string;
+  onNavigate?: () => void;
+}) {
   const pathname = usePathname();
 
   return (
-    <aside className="bg-almera-black flex w-64 shrink-0 flex-col justify-between px-5 py-8 text-white">
+    <div className="flex h-full flex-col justify-between px-5 py-8 text-white">
       <div>
-        <Link href="/admin" className="block px-2">
+        <Link href="/admin" className="block px-2" onClick={onNavigate}>
           <AlmeraLogo tone="light" />
         </Link>
         <p className="text-almera-gold px-2 pt-2 text-[11px] tracking-luxury uppercase">
@@ -44,6 +60,7 @@ export function AdminSidebar({ adminEmail }: { adminEmail: string }) {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={onNavigate}
                 className={cn(
                   "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors",
                   isActive
@@ -62,6 +79,7 @@ export function AdminSidebar({ adminEmail }: { adminEmail: string }) {
       <div className="flex flex-col gap-3">
         <Link
           href="/"
+          onClick={onNavigate}
           className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-white/60 hover:bg-white/5 hover:text-white"
         >
           <Store className="size-4" /> View Store
@@ -82,6 +100,53 @@ export function AdminSidebar({ adminEmail }: { adminEmail: string }) {
           </form>
         </div>
       </div>
-    </aside>
+    </div>
+  );
+}
+
+export function AdminSidebar({ adminEmail }: { adminEmail: string }) {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const pathname = usePathname();
+
+  React.useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  return (
+    <>
+      <div className="bg-almera-black flex items-center justify-between px-4 py-3 md:hidden">
+        <Link href="/admin" className="block">
+          <AlmeraLogo tone="light" />
+        </Link>
+        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+          <SheetTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/10 hover:text-white"
+              aria-label="Open menu"
+            >
+              <Menu className="size-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent
+            side="left"
+            className="bg-almera-black w-3/4 max-w-xs border-white/10 p-0 sm:max-w-xs"
+          >
+            <SheetHeader className="sr-only">
+              <SheetTitle>Admin Navigation</SheetTitle>
+            </SheetHeader>
+            <AdminNavContent
+              adminEmail={adminEmail}
+              onNavigate={() => setMobileOpen(false)}
+            />
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      <aside className="bg-almera-black hidden shrink-0 md:flex md:w-56 lg:w-64">
+        <AdminNavContent adminEmail={adminEmail} />
+      </aside>
+    </>
   );
 }

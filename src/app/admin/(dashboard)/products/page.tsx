@@ -39,7 +39,7 @@ export default async function AdminProductsPage({
             {products.length} product{products.length !== 1 && "s"}
           </p>
         </div>
-        <Button asChild>
+        <Button asChild className="w-full sm:w-auto">
           <Link href="/admin/products/new">
             <Plus className="size-4" /> Add Product
           </Link>
@@ -86,13 +86,18 @@ export default async function AdminProductsPage({
                       </div>
                       <div>
                         <p className="font-medium">{product.name}</p>
-                        <div className="mt-1 flex gap-1">
+                        <div className="mt-1 flex flex-wrap gap-1">
                           {product.is_featured && (
                             <Badge className="text-[10px]">Featured</Badge>
                           )}
                           {product.is_best_seller && (
                             <Badge variant="gold" className="text-[10px]">
                               Best Seller
+                            </Badge>
+                          )}
+                          {product.is_original && (
+                            <Badge variant="gold-outline" className="text-[10px]">
+                              Original
                             </Badge>
                           )}
                         </div>

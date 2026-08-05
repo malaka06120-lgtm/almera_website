@@ -52,6 +52,7 @@ export function SiteFooter() {
               <li><Link href="/shop" className="transition-colors hover:text-white">Shop All</Link></li>
               <li><Link href="/categories" className="transition-colors hover:text-white">Categories</Link></li>
               <li><Link href="/about" className="transition-colors hover:text-white">About Almera</Link></li>
+              <li><Link href="/policy" className="transition-colors hover:text-white">Our Policy</Link></li>
               <li><Link href="/contact" className="transition-colors hover:text-white">Contact</Link></li>
               <li><Link href="/wishlist" className="transition-colors hover:text-white">Wishlist</Link></li>
             </ul>

@@ -3,7 +3,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { checkoutSchema, type CheckoutFormValues } from "@/lib/validations";
 import { generateOrderNumber } from "@/lib/utils";
-import { SHIPPING_FEE, FREE_SHIPPING_THRESHOLD } from "@/lib/constants";
+import { calculateDeliveryFee } from "@/lib/delivery-areas";
 import { sendOrderNotificationEmail } from "@/lib/email/order-notification";
 
 export interface CheckoutCartItem {
@@ -82,8 +82,11 @@ export async function createOrder(
     });
   }
 
-  const shippingFee = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FEE;
-  const total = subtotal + shippingFee;
+  const deliveryFee = calculateDeliveryFee(parsed.data.deliveryArea, subtotal);
+  if (deliveryFee === undefined) {
+    return { success: false, error: "Please select a valid delivery area." };
+  }
+  const total = subtotal + deliveryFee;
 
   let orderId: string | null = null;
   let orderNumber = "";
@@ -96,12 +99,12 @@ export async function createOrder(
         order_number: orderNumber,
         full_name: parsed.data.fullName,
         phone: parsed.data.phone,
-        governorate: parsed.data.governorate,
+        delivery_area: parsed.data.deliveryArea,
         city: parsed.data.city,
         address: parsed.data.address,
         notes: parsed.data.notes || null,
         subtotal,
-        shipping_fee: shippingFee,
+        delivery_fee: deliveryFee,
         total,
       })
       .select("id")
@@ -143,13 +146,13 @@ export async function createOrder(
     orderNumber,
     fullName: parsed.data.fullName,
     phone: parsed.data.phone,
-    governorate: parsed.data.governorate,
+    deliveryArea: parsed.data.deliveryArea,
     city: parsed.data.city,
     address: parsed.data.address,
     notes: parsed.data.notes,
     items: orderItemsToInsert,
     subtotal,
-    shippingFee,
+    deliveryFee,
     total,
   });
 

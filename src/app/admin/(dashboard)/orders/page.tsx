@@ -63,7 +63,7 @@ export default async function AdminOrdersPage({
                   <div className="text-muted-foreground text-xs">{order.phone}</div>
                 </TableCell>
                 <TableCell>
-                  {order.city}, {order.governorate}
+                  {order.city}, {order.delivery_area}
                 </TableCell>
                 <TableCell>
                   {new Date(order.created_at).toLocaleDateString("en-GB")}

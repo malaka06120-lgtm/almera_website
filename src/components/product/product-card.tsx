@@ -46,6 +46,11 @@ export function ProductCard({ product }: { product: Product }) {
             <Badge variant="gold">Best Seller</Badge>
           )}
           {product.is_featured && <Badge>Featured</Badge>}
+          {product.is_original && (
+            <Badge variant="gold-outline" className="bg-white/90">
+              Original
+            </Badge>
+          )}
           {totalStock === 0 && <Badge variant="destructive">Sold Out</Badge>}
         </div>
 

@@ -27,7 +27,7 @@ export function AdminSearch({ placeholder }: { placeholder: string }) {
   }, [value]);
 
   return (
-    <div className="relative max-w-sm flex-1">
+    <div className="relative w-full flex-1 sm:max-w-sm">
       <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
       <Input
         value={value}

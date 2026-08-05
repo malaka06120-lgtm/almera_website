@@ -17,14 +17,17 @@ import { Separator } from "@/components/ui/separator";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { useCartStore } from "@/store/cart-store";
 import { checkoutSchema, type CheckoutFormValues } from "@/lib/validations";
 import { createOrder } from "@/lib/actions/orders";
-import { EGYPT_GOVERNORATES, FREE_SHIPPING_THRESHOLD, SHIPPING_FEE } from "@/lib/constants";
+import { DELIVERY_FEE_GROUPS, calculateDeliveryFee } from "@/lib/delivery-areas";
 import { formatPrice } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -32,7 +35,6 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { items, subtotal, clearCart, hasHydrated } = useCartStore();
   const sub = subtotal();
-  const shipping = sub >= FREE_SHIPPING_THRESHOLD || sub === 0 ? 0 : SHIPPING_FEE;
 
   const {
     register,
@@ -42,8 +44,11 @@ export default function CheckoutPage() {
     formState: { errors, isSubmitting },
   } = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: { governorate: "", notes: "" },
+    defaultValues: { deliveryArea: "", notes: "" },
   });
+
+  const deliveryArea = watch("deliveryArea");
+  const deliveryFee = calculateDeliveryFee(deliveryArea, sub) ?? 0;
 
   async function onSubmit(values: CheckoutFormValues) {
     const result = await createOrder(
@@ -122,24 +127,30 @@ export default function CheckoutPage() {
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
-              <Label>Governorate</Label>
+              <Label>Delivery Area</Label>
               <Select
-                value={watch("governorate")}
-                onValueChange={(value) => setValue("governorate", value, { shouldValidate: true })}
+                value={deliveryArea}
+                onValueChange={(value) => setValue("deliveryArea", value, { shouldValidate: true })}
               >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select governorate" />
+                  <SelectValue placeholder="Select your delivery area" />
                 </SelectTrigger>
                 <SelectContent>
-                  {EGYPT_GOVERNORATES.map((gov) => (
-                    <SelectItem key={gov} value={gov}>
-                      {gov}
-                    </SelectItem>
+                  {DELIVERY_FEE_GROUPS.map((group, i) => (
+                    <SelectGroup key={group.fee}>
+                      {i > 0 && <SelectSeparator />}
+                      <SelectLabel>{formatPrice(group.fee)} Delivery</SelectLabel>
+                      {group.areas.map((area) => (
+                        <SelectItem key={area} value={area}>
+                          {area}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   ))}
                 </SelectContent>
               </Select>
-              {errors.governorate && (
-                <p className="text-destructive text-xs">{errors.governorate.message}</p>
+              {errors.deliveryArea && (
+                <p className="text-destructive text-xs">{errors.deliveryArea.message}</p>
               )}
             </div>
 
@@ -223,8 +234,10 @@ export default function CheckoutPage() {
               <span>{formatPrice(sub)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Shipping</span>
-              <span>{shipping === 0 ? "Free" : formatPrice(shipping)}</span>
+              <span className="text-muted-foreground">Delivery</span>
+              <span>
+                {!deliveryArea ? "—" : deliveryFee === 0 ? "Free" : formatPrice(deliveryFee)}
+              </span>
             </div>
           </div>
 
@@ -233,7 +246,7 @@ export default function CheckoutPage() {
           <div className="flex justify-between">
             <span className="font-heading text-lg">Total</span>
             <span className="font-heading text-almera-gold text-lg">
-              {formatPrice(sub + shipping)}
+              {formatPrice(sub + deliveryFee)}
             </span>
           </div>
         </div>

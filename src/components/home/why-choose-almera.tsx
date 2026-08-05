@@ -1,4 +1,4 @@
-import { Gem, Leaf, ShieldCheck, Truck } from "lucide-react";
+import { Gem, Leaf, Truck } from "lucide-react";
 
 import { FadeUp, StaggerGroup, StaggerItem } from "@/components/shared/motion";
 
@@ -14,12 +14,6 @@ const REASONS = [
     title: "Cash on Delivery",
     description:
       "Order with confidence — pay only when your Almera fragrance arrives at your door.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "100% Authentic",
-    description:
-      "Crafted and bottled in-house, every Almera bottle is guaranteed authentic.",
   },
   {
     icon: Leaf,
@@ -46,7 +40,7 @@ export function WhyChooseAlmera() {
           </p>
         </FadeUp>
 
-        <StaggerGroup className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <StaggerGroup className="grid grid-cols-1 gap-10 sm:grid-cols-3">
           {REASONS.map(({ icon: Icon, title, description }) => (
             <StaggerItem
               key={title}

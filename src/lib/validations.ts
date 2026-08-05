@@ -1,12 +1,17 @@
 import { z } from "zod";
 
+import { DELIVERY_AREA_NAMES } from "@/lib/delivery-areas";
+
 export const checkoutSchema = z.object({
   fullName: z.string().trim().min(3, "Please enter your full name"),
   phone: z
     .string()
     .trim()
     .regex(/^01[0125][0-9]{8}$/, "Enter a valid Egyptian phone number (e.g. 01012345678)"),
-  governorate: z.string().min(1, "Please select your governorate"),
+  deliveryArea: z
+    .string()
+    .min(1, "Please select your delivery area")
+    .refine((value) => DELIVERY_AREA_NAMES.has(value), "Please select a valid delivery area"),
   city: z.string().trim().min(2, "Please enter your city"),
   address: z.string().trim().min(8, "Please enter your full address"),
   notes: z.string().trim().max(500).optional().or(z.literal("")),
@@ -48,6 +53,7 @@ export const productSchema = z.object({
   baseNotes: z.array(z.string()),
   isFeatured: z.boolean(),
   isBestSeller: z.boolean(),
+  isOriginal: z.boolean(),
   isActive: z.boolean(),
   variants: z.array(productVariantSchema).min(1, "Add at least one size"),
 });

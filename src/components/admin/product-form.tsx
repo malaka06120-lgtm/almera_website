@@ -63,6 +63,7 @@ export function ProductForm({
           baseNotes: product.base_notes,
           isFeatured: product.is_featured,
           isBestSeller: product.is_best_seller,
+          isOriginal: product.is_original,
           isActive: product.is_active,
           variants: (product.variants ?? []).map((v) => ({
             id: v.id,
@@ -83,6 +84,7 @@ export function ProductForm({
           baseNotes: [],
           isFeatured: false,
           isBestSeller: false,
+          isOriginal: false,
           isActive: true,
           variants: [{ sizeMl: 50, price: 0, stockQuantity: 0 }],
         },
@@ -242,6 +244,16 @@ export function ProductForm({
         </label>
         <label className="flex items-center justify-between border border-border/70 p-4">
           <div>
+            <p className="text-sm font-medium">Original Perfume</p>
+            <p className="text-muted-foreground text-xs">Show an &ldquo;Original&rdquo; authenticity badge on this product</p>
+          </div>
+          <Switch
+            checked={watch("isOriginal")}
+            onCheckedChange={(v) => setValue("isOriginal", v)}
+          />
+        </label>
+        <label className="flex items-center justify-between border border-border/70 p-4">
+          <div>
             <p className="text-sm font-medium">Active</p>
             <p className="text-muted-foreground text-xs">Visible on the storefront</p>
           </div>
@@ -252,7 +264,7 @@ export function ProductForm({
         </label>
       </section>
 
-      <Button type="submit" size="lg" disabled={isSubmitting} className="w-fit">
+      <Button type="submit" size="lg" disabled={isSubmitting} className="w-full sm:w-fit">
         {isSubmitting && <Loader2 className="size-4 animate-spin" />}
         {isEditing ? "Save Changes" : "Create Product"}
       </Button>

@@ -16,13 +16,13 @@ interface OrderNotificationInput {
   fullName: string;
   phone: string;
   email?: string | null;
-  governorate: string;
+  deliveryArea: string;
   city: string;
   address: string;
   notes?: string | null;
   items: OrderNotificationItem[];
   subtotal: number;
-  shippingFee: number;
+  deliveryFee: number;
   total: number;
 }
 
@@ -70,7 +70,8 @@ export async function sendOrderNotificationEmail(order: OrderNotificationInput) 
     `Customer Name: ${order.fullName}`,
     `Phone Number: ${order.phone}`,
     `Email: ${order.email || "Not provided"}`,
-    `Delivery Address: ${order.address}, ${order.city}, ${order.governorate}`,
+    `Delivery Address: ${order.address}, ${order.city}`,
+    `Delivery Area: ${order.deliveryArea}`,
     order.notes ? `Notes: ${order.notes}` : null,
     `Payment Method: Cash on Delivery`,
     `Order Date: ${orderDate}`,
@@ -79,7 +80,7 @@ export async function sendOrderNotificationEmail(order: OrderNotificationInput) 
     itemsList,
     "",
     `Subtotal: ${formatPrice(order.subtotal)}`,
-    `Shipping: ${order.shippingFee === 0 ? "Free" : formatPrice(order.shippingFee)}`,
+    `Delivery Fee: ${order.deliveryFee === 0 ? "Free Shipping" : formatPrice(order.deliveryFee)}`,
     `Total: ${formatPrice(order.total)}`,
   ].filter((line): line is string => line !== null);
 

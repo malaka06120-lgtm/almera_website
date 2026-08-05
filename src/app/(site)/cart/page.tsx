@@ -9,12 +9,12 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatPrice } from "@/lib/utils";
-import { FREE_SHIPPING_THRESHOLD, SHIPPING_FEE } from "@/lib/constants";
+import { FREE_SHIPPING_THRESHOLD } from "@/lib/delivery-areas";
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, subtotal, hasHydrated } = useCartStore();
   const sub = subtotal();
-  const shipping = sub >= FREE_SHIPPING_THRESHOLD || sub === 0 ? 0 : SHIPPING_FEE;
+  const qualifiesForFreeShipping = sub >= FREE_SHIPPING_THRESHOLD;
 
   if (!hasHydrated) {
     return (
@@ -125,22 +125,24 @@ export default function CartPage() {
               <span>{formatPrice(sub)}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Shipping</span>
-              <span>{shipping === 0 ? "Free" : formatPrice(shipping)}</span>
+              <span className="text-muted-foreground">Delivery</span>
+              <span className="text-muted-foreground text-xs">
+                {qualifiesForFreeShipping ? "Free" : "Calculated at checkout"}
+              </span>
             </div>
-            {shipping > 0 && (
-              <p className="text-muted-foreground text-xs">
-                Free shipping over {formatPrice(FREE_SHIPPING_THRESHOLD)}
-              </p>
-            )}
           </div>
           <Separator className="my-5" />
           <div className="flex justify-between">
-            <span className="font-heading text-lg">Total</span>
+            <span className="font-heading text-lg">Estimated Total</span>
             <span className="font-heading text-almera-gold text-lg">
-              {formatPrice(sub + shipping)}
+              {formatPrice(sub)}
             </span>
           </div>
+          <p className="text-muted-foreground mt-2 text-xs">
+            {qualifiesForFreeShipping
+              ? "You qualify for free shipping."
+              : `Free shipping over ${formatPrice(FREE_SHIPPING_THRESHOLD)}. Delivery fee is added at checkout based on your area.`}
+          </p>
           <Button size="lg" className="mt-7 w-full" asChild>
             <Link href="/checkout">Proceed to Checkout</Link>
           </Button>

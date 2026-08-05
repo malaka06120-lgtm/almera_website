@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Badge } from "@/components/ui/badge";
@@ -63,6 +64,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
           <div className="flex items-center gap-2">
             {product.is_best_seller && <Badge variant="gold">Best Seller</Badge>}
             {product.is_featured && <Badge>Featured</Badge>}
+            {product.is_original && <Badge variant="gold-outline">Original</Badge>}
             <span className="text-muted-foreground text-xs tracking-luxury uppercase">
               {GENDER_LABELS[product.gender]}
               {product.category && ` · ${product.category.name}`}
@@ -116,6 +118,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <p>
               Orders are typically prepared within 24 hours and delivered
               within 2–5 business days depending on your location.
+            </p>
+            <p>
+              You may inspect your order with the courier before payment.
+              Read our full{" "}
+              <Link href="/policy" className="text-almera-gold hover:underline">
+                inspection and returns policy
+              </Link>
+              .
             </p>
           </div>
         </TabsContent>

@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Eye } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -36,7 +37,7 @@ export function OrderDetailsDialog({ order }: { order: Order }) {
           <div>
             <p className="text-muted-foreground text-xs uppercase">Delivery Address</p>
             <p>{order.address}</p>
-            <p>{order.city}, {order.governorate}</p>
+            <p>{order.city}, {order.delivery_area}</p>
           </div>
           {order.notes && (
             <div>
@@ -68,8 +69,11 @@ export function OrderDetailsDialog({ order }: { order: Order }) {
             <span>{formatPrice(order.subtotal)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Shipping</span>
-            <span>{order.shipping_fee === 0 ? "Free" : formatPrice(order.shipping_fee)}</span>
+            <span className="text-muted-foreground">Delivery Fee ({order.delivery_area})</span>
+            <span className="flex items-center gap-2">
+              {order.delivery_fee === 0 && <Badge variant="gold">Free Shipping</Badge>}
+              {formatPrice(order.delivery_fee)}
+            </span>
           </div>
           <div className="flex justify-between font-heading text-base">
             <span>Total</span>

@@ -22,6 +22,7 @@ function mapProductRow(values: ProductFormValues) {
     base_notes: values.baseNotes,
     is_featured: values.isFeatured,
     is_best_seller: values.isBestSeller,
+    is_original: values.isOriginal,
     is_active: values.isActive,
   };
 }

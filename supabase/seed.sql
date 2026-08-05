@@ -5,14 +5,13 @@
 -- public/placeholders/ (self-authored, brand-safe). Replace with real
 -- product photography (e.g. Supabase Storage URLs) whenever it's ready.
 insert into categories (name, slug, description, image_url) values
-  ('Floral', 'floral', 'Delicate bouquets of rose, jasmine, and peony.', '/placeholders/category-floral.svg'),
-  ('Oud & Woody', 'oud-woody', 'Rich, warm woods layered with rare oud.', '/placeholders/category-oud-woody.svg'),
-  ('Citrus', 'citrus', 'Bright, sparkling top notes for everyday wear.', '/placeholders/category-citrus.svg'),
-  ('Oriental', 'oriental', 'Spiced amber and vanilla for the evening.', '/placeholders/category-oriental.svg')
+  ('Floral', 'floral', 'Delicate bouquets of rose, jasmine, and peony.', '/placeholders/floral.jpeg'),
+  ('Citrus', 'citrus', 'Bright, sparkling top notes for everyday wear.', '/placeholders/citrus.jpeg'),
+  ('Oriental', 'oriental', 'Spiced amber and vanilla for the evening.', '/placeholders/oriental.jpeg'),
+  ('Original Perfumes', 'original-perfumes', 'Authentic, verified fragrances straight from the house.', '/placeholders/original.jpeg')
 on conflict (slug) do nothing;
 
 with cat_floral as (select id from categories where slug = 'floral'),
-     cat_oud as (select id from categories where slug = 'oud-woody'),
      cat_citrus as (select id from categories where slug = 'citrus'),
      cat_oriental as (select id from categories where slug = 'oriental'),
      p1 as (
@@ -31,7 +30,7 @@ with cat_floral as (select id from categories where slug = 'floral'),
        values (
          'Almera Oud Royal', 'almera-oud-royal',
          'Regal oud and amber for those who command a room in silence.',
-         'men', (select id from cat_oud),
+         'men', null,
          array['/placeholders/product-oud-royal-1.svg', '/placeholders/product-oud-royal-2.svg'],
          array['Saffron', 'Cardamom'], array['Oud', 'Rose'], array['Amber', 'Leather'],
          true, false

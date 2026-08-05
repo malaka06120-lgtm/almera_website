@@ -40,6 +40,7 @@ export interface Product {
   base_notes: string[];
   is_featured: boolean;
   is_best_seller: boolean;
+  is_original: boolean;
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -63,13 +64,13 @@ export interface Order {
   order_number: string;
   full_name: string;
   phone: string;
-  governorate: string;
+  delivery_area: string;
   city: string;
   address: string;
   notes: string | null;
   status: OrderStatus;
   subtotal: number;
-  shipping_fee: number;
+  delivery_fee: number;
   total: number;
   created_at: string;
   updated_at: string;

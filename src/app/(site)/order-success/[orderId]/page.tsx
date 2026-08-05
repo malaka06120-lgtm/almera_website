@@ -70,12 +70,8 @@ export default async function OrderSuccessPage({
             <span>{formatPrice(order.subtotal)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Shipping</span>
-            <span>
-              {order.shipping_fee === 0
-                ? "Free"
-                : formatPrice(order.shipping_fee)}
-            </span>
+            <span className="text-muted-foreground">Delivery</span>
+            <span>{order.delivery_fee === 0 ? "Free" : formatPrice(order.delivery_fee)}</span>
           </div>
           <div className="flex justify-between font-heading text-lg">
             <span>Total (Cash on Delivery)</span>
@@ -89,7 +85,7 @@ export default async function OrderSuccessPage({
           <p className="text-foreground font-medium">Delivery Address</p>
           <p>{order.full_name} &middot; {order.phone}</p>
           <p>
-            {order.address}, {order.city}, {order.governorate}
+            {order.address}, {order.city}, {order.delivery_area}
           </p>
         </div>
       </div>

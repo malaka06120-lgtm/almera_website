@@ -44,6 +44,7 @@ create table products (
   base_notes text[] not null default '{}',
   is_featured boolean not null default false,
   is_best_seller boolean not null default false,
+  is_original boolean not null default false,
   is_active boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -53,6 +54,7 @@ create index products_category_id_idx on products (category_id);
 create index products_gender_idx on products (gender);
 create index products_is_featured_idx on products (is_featured) where is_featured;
 create index products_is_best_seller_idx on products (is_best_seller) where is_best_seller;
+create index products_is_original_idx on products (is_original) where is_original;
 
 -- ============================================================================
 -- PRODUCT VARIANTS (size / price / stock)
@@ -93,13 +95,13 @@ create table orders (
   order_number text not null unique,
   full_name text not null,
   phone text not null,
-  governorate text not null,
+  delivery_area text not null,
   city text not null,
   address text not null,
   notes text,
   status order_status not null default 'pending',
   subtotal numeric(10, 2) not null default 0,
-  shipping_fee numeric(10, 2) not null default 0,
+  delivery_fee numeric(10, 2) not null default 0,
   total numeric(10, 2) not null default 0,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()

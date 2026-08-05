@@ -17,6 +17,7 @@ const badgeVariants = cva(
           "border-transparent bg-destructive text-destructive-foreground",
         outline: "text-foreground border-border",
         gold: "border-transparent bg-almera-gold text-almera-black",
+        "gold-outline": "border-almera-gold text-almera-gold bg-transparent",
       },
     },
     defaultVariants: {
