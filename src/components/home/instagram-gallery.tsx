@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { InstagramIcon } from "@/components/shared/social-icons";
 import { FadeUp, StaggerGroup, StaggerItem } from "@/components/shared/motion";
-import { INSTAGRAM_HANDLE } from "@/lib/constants";
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from "@/lib/constants";
 
 const GALLERY_IMAGES = [
   "/placeholders/gallery-1.svg",
@@ -26,7 +26,7 @@ export function InstagramGallery() {
             Follow Almera
           </h2>
           <Link
-            href="https://instagram.com"
+            href={INSTAGRAM_URL}
             target="_blank"
             className="text-muted-foreground mt-3 inline-flex items-center gap-2 text-sm transition-colors hover:text-almera-gold"
           >
@@ -38,7 +38,7 @@ export function InstagramGallery() {
           {GALLERY_IMAGES.map((src, i) => (
             <StaggerItem key={i}>
               <Link
-                href="https://instagram.com"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 className="group bg-muted relative block aspect-square overflow-hidden rounded-xl"
               >

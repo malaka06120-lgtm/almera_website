@@ -76,7 +76,10 @@
       "Bash(rm -rf .next)",
       "Bash(node -e \"const sharp=require\\('sharp'\\); sharp\\('public/logo.jpeg'\\).metadata\\(\\).then\\(m=>console.log\\(JSON.stringify\\(m,null,2\\)\\)\\)\")",
       "Bash(node scripts/crop-logo.mjs)",
-      "Bash(timeout 40 node scripts/logo-check.mjs)"
+      "Bash(timeout 40 node scripts/logo-check.mjs)",
+      "Bash(timeout 30 node scripts/hero-check.mjs)",
+      "Bash(tail -100 /tmp/almera-prod.log)",
+      "Bash(tail -20 /tmp/almera-prod.log)"
     ],
     "additionalDirectories": [
       "c:\\Users\\thama\\OneDrive\\Desktop\\almera-website\\src\\app\\(site)\\product",

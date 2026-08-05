@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { contactSchema, type ContactFormValues } from "@/lib/validations";
-import { submitContactMessage } from "@/lib/actions/contact";
 
 export function ContactForm() {
   const {
@@ -24,22 +23,32 @@ export function ContactForm() {
   });
 
   async function onSubmit(values: ContactFormValues) {
-    const result = await submitContactMessage(values);
-    if (result.success) {
-      toast.success("Message sent — we'll be in touch soon.");
-      reset();
-    } else {
-      toast.error(result.error);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const result = await res.json();
+
+      if (res.ok && result.success) {
+        toast.success("Message sent successfully!");
+        reset();
+      } else {
+        toast.error("Something went wrong.");
+      }
+    } catch {
+      toast.error("Something went wrong.");
     }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
-        <Label htmlFor="name">Full Name</Label>
-        <Input id="name" {...register("name")} placeholder="Your name" />
-        {errors.name && (
-          <p className="text-destructive text-xs">{errors.name.message}</p>
+        <Label htmlFor="fullName">Full Name</Label>
+        <Input id="fullName" {...register("fullName")} placeholder="Your name" />
+        {errors.fullName && (
+          <p className="text-destructive text-xs">{errors.fullName.message}</p>
         )}
       </div>
 

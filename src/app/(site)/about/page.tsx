@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { FadeUp } from "@/components/shared/motion";
-import { AlmeraMonogram } from "@/components/shared/almera-logo";
 
 export const metadata: Metadata = {
   title: "About Almera",
@@ -36,18 +35,15 @@ export default function AboutPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-24 text-center sm:px-6 lg:px-8">
         <FadeUp>
-          <AlmeraMonogram className="text-6xl" />
-          <p className="mt-6 font-heading text-2xl leading-relaxed sm:text-3xl">
+          <p className="font-heading text-2xl leading-relaxed sm:text-3xl">
             &ldquo;Almera was founded on a single belief — that fragrance is
             the most intimate form of luxury.&rdquo;
           </p>
           <p className="text-muted-foreground mt-8 text-sm leading-relaxed">
-            Born in Egypt and inspired by the world&apos;s most storied perfume
-            houses, Almera blends rare oud, delicate florals, and warm ambers
-            into fragrances designed to be remembered. Every bottle is composed
-            in small batches, tested for longevity, and finished with the same
-            attention to detail you&apos;d expect from the ateliers of Paris —
-            without ever leaving home.
+            At Almera, we believe luxury should be accessible to everyone. We
+            carefully curate authentic, high-end fragrances from the
+            world&apos;s most loved perfume houses, bringing timeless scents
+            and unforgettable experiences at exceptional value.
           </p>
         </FadeUp>
       </section>
@@ -57,8 +53,8 @@ export default function AboutPage() {
           <FadeUp>
             <div className="bg-muted shadow-luxury relative aspect-[4/5] overflow-hidden rounded-2xl">
               <Image
-                src="/placeholders/about-craft.svg"
-                alt="Almera craftsmanship"
+                src="/about.jpg"
+                alt="Almera curated fragrance collection"
                 fill
                 className="object-cover"
                 sizes="(min-width: 1024px) 45vw, 100vw"
@@ -66,21 +62,13 @@ export default function AboutPage() {
             </div>
           </FadeUp>
           <FadeUp delay={0.1}>
-            <span className="text-almera-gold text-xs tracking-luxury uppercase">
-              Craftsmanship
-            </span>
-            <h2 className="mt-3 font-heading text-3xl sm:text-4xl">
+            <h2 className="font-heading text-3xl sm:text-4xl">
               Composed with Rare Ingredients
             </h2>
             <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
-              Each Almera fragrance begins with a search for rare, ethically
-              sourced ingredients — Turkish rose, Cambodian oud, Sicilian
-              bergamot. Our perfumers layer top, heart, and base notes to
-              create compositions that evolve gracefully over the day.
-            </p>
-            <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
-              We bottle in small batches to preserve quality, and every order
-              is prepared with care, ready for cash-on-delivery across Egypt.
+              Discover a curated world of luxury fragrances. Authentic
+              perfumes, timeless elegance, and unforgettable scents—all in
+              one place.
             </p>
           </FadeUp>
         </div>

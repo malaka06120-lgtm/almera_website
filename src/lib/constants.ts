@@ -60,4 +60,8 @@ export const GENDER_LABELS: Record<string, string> = {
   unisex: "Unisex",
 };
 
-export const INSTAGRAM_HANDLE = "@almera.perfumes";
+export const INSTAGRAM_HANDLE = "@almera_eg";
+export const INSTAGRAM_URL = "https://instagram.com/almera_eg";
+
+export const FACEBOOK_HANDLE = "Almera";
+export const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61576716705686";

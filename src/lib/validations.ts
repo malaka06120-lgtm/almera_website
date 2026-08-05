@@ -15,7 +15,7 @@ export const checkoutSchema = z.object({
 export type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 
 export const contactSchema = z.object({
-  name: z.string().trim().min(2, "Please enter your name"),
+  fullName: z.string().trim().min(2, "Please enter your name"),
   email: z.string().trim().email("Enter a valid email address"),
   message: z.string().trim().min(10, "Message must be at least 10 characters"),
 });

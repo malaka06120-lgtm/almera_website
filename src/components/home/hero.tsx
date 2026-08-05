@@ -79,8 +79,8 @@ export function Hero() {
             className="shadow-luxury relative aspect-[4/5] w-full overflow-hidden rounded-2xl sm:aspect-[3/4]"
           >
             <Image
-              src="/placeholders/hero.svg"
-              alt="Almera signature fragrance"
+              src="/hero-perfumes.jpg"
+              alt="Almera signature fragrance collection"
               fill
               priority
               sizes="(min-width: 1024px) 45vw, 100vw"

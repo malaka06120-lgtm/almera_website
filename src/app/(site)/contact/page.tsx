@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
-import { Mail, MapPin, Phone } from "lucide-react";
+import Link from "next/link";
 
 import { ContactForm } from "@/components/contact/contact-form";
 import { FadeUp } from "@/components/shared/motion";
+import { InstagramIcon, FacebookIcon } from "@/components/shared/social-icons";
+import {
+  INSTAGRAM_HANDLE,
+  INSTAGRAM_URL,
+  FACEBOOK_HANDLE,
+  FACEBOOK_URL,
+} from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -28,38 +35,38 @@ export default function ContactPage() {
         <FadeUp className="flex flex-col gap-8">
           <div className="flex items-start gap-4">
             <div className="border-almera-border bg-almera-blush-soft flex size-12 shrink-0 items-center justify-center rounded-full border">
-              <Phone className="text-almera-gold size-4.5" strokeWidth={1.5} />
+              <InstagramIcon className="text-almera-gold size-4.5" strokeWidth={1.5} />
             </div>
             <div>
-              <h3 className="font-heading text-lg">Call Us</h3>
-              <p className="text-muted-foreground text-sm">+20 100 000 0000</p>
+              <h3 className="font-heading text-lg">Instagram</h3>
+              <Link
+                href={INSTAGRAM_URL}
+                target="_blank"
+                className="text-muted-foreground text-sm transition-colors hover:text-almera-gold"
+              >
+                {INSTAGRAM_HANDLE}
+              </Link>
               <p className="text-muted-foreground text-sm">
-                Sat–Thu, 10am–8pm (Cairo time)
+                DM us for the fastest response
               </p>
             </div>
           </div>
 
           <div className="flex items-start gap-4">
             <div className="border-almera-border bg-almera-blush-soft flex size-12 shrink-0 items-center justify-center rounded-full border">
-              <Mail className="text-almera-gold size-4.5" strokeWidth={1.5} />
+              <FacebookIcon className="text-almera-gold size-4.5" strokeWidth={1.5} />
             </div>
             <div>
-              <h3 className="font-heading text-lg">Email Us</h3>
-              <p className="text-muted-foreground text-sm">hello@almera.com</p>
+              <h3 className="font-heading text-lg">Facebook</h3>
+              <Link
+                href={FACEBOOK_URL}
+                target="_blank"
+                className="text-muted-foreground text-sm transition-colors hover:text-almera-gold"
+              >
+                {FACEBOOK_HANDLE}
+              </Link>
               <p className="text-muted-foreground text-sm">
-                We reply within 24 hours
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-4">
-            <div className="border-almera-border bg-almera-blush-soft flex size-12 shrink-0 items-center justify-center rounded-full border">
-              <MapPin className="text-almera-gold size-4.5" strokeWidth={1.5} />
-            </div>
-            <div>
-              <h3 className="font-heading text-lg">Visit Us</h3>
-              <p className="text-muted-foreground text-sm">
-                Cairo, Egypt — showroom by appointment
+                Message us anytime
               </p>
             </div>
           </div>

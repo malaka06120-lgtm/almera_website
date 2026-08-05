@@ -1,12 +1,17 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { InstagramIcon, FacebookIcon } from "@/components/shared/social-icons";
 import { AlmeraLogo } from "@/components/shared/almera-logo";
-import { INSTAGRAM_HANDLE } from "@/lib/constants";
+import {
+  INSTAGRAM_HANDLE,
+  INSTAGRAM_URL,
+  FACEBOOK_HANDLE,
+  FACEBOOK_URL,
+} from "@/lib/constants";
 
 export function SiteFooter() {
   return (
@@ -21,7 +26,7 @@ export function SiteFooter() {
             </p>
             <div className="mt-7 flex items-center gap-4">
               <Link
-                href="https://instagram.com"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 aria-label="Instagram"
                 className="flex size-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-almera-gold hover:text-almera-gold"
@@ -29,7 +34,7 @@ export function SiteFooter() {
                 <InstagramIcon className="size-4" />
               </Link>
               <Link
-                href="https://facebook.com"
+                href={FACEBOOK_URL}
                 target="_blank"
                 aria-label="Facebook"
                 className="flex size-9 items-center justify-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-almera-gold hover:text-almera-gold"
@@ -57,16 +62,27 @@ export function SiteFooter() {
               Get in Touch
             </h3>
             <ul className="mt-5 flex flex-col gap-3.5 text-sm text-white/60">
-              <li className="flex items-center gap-2.5">
-                <Phone className="size-4 shrink-0" /> +20 100 000 0000
+              <li>
+                <Link
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  className="flex items-center gap-2.5 transition-colors hover:text-white"
+                >
+                  <InstagramIcon className="size-4 shrink-0" /> {INSTAGRAM_HANDLE}
+                </Link>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Mail className="size-4 shrink-0" /> hello@almera.com
+              <li>
+                <Link
+                  href={FACEBOOK_URL}
+                  target="_blank"
+                  className="flex items-center gap-2.5 transition-colors hover:text-white"
+                >
+                  <FacebookIcon className="size-4 shrink-0" /> {FACEBOOK_HANDLE}
+                </Link>
               </li>
               <li className="flex items-center gap-2.5">
                 <MapPin className="size-4 shrink-0" /> Cairo, Egypt
               </li>
-              <li className="text-white/35">{INSTAGRAM_HANDLE}</li>
             </ul>
           </div>
         </div>

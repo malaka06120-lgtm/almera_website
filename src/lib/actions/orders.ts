@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { checkoutSchema, type CheckoutFormValues } from "@/lib/validations";
 import { generateOrderNumber } from "@/lib/utils";
 import { SHIPPING_FEE, FREE_SHIPPING_THRESHOLD } from "@/lib/constants";
+import { sendOrderNotificationEmail } from "@/lib/email/order-notification";
 
 export interface CheckoutCartItem {
   variantId: string;
@@ -135,6 +136,22 @@ export async function createOrder(
       .eq("id", item.variant_id)
       .gte("stock_quantity", item.quantity);
   }
+
+  // The order is fully saved at this point. Notification is a side effect —
+  // sendOrderNotificationEmail never throws, so it can't affect this result.
+  await sendOrderNotificationEmail({
+    orderNumber,
+    fullName: parsed.data.fullName,
+    phone: parsed.data.phone,
+    governorate: parsed.data.governorate,
+    city: parsed.data.city,
+    address: parsed.data.address,
+    notes: parsed.data.notes,
+    items: orderItemsToInsert,
+    subtotal,
+    shippingFee,
+    total,
+  });
 
   return { success: true, orderId, orderNumber };
 }
