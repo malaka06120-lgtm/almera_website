@@ -52,7 +52,7 @@ export function ProductCard({ product }: { product: Product }) {
             </Badge>
           )}
           {product.is_tester && (
-            <span className="text-[11px] font-medium tracking-wider text-white uppercase drop-shadow-sm">
+            <span className="rounded-full bg-black/55 px-3 py-1 text-[10px] font-medium tracking-wider text-white uppercase backdrop-blur-sm">
               Tester
             </span>
           )}
