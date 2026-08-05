@@ -4,8 +4,6 @@ import { Resend } from "resend";
 import { createClient } from "@/lib/supabase/server";
 import { contactSchema } from "@/lib/validations";
 
-const CONTACT_RECIPIENT = "malak2004hamza@gmail.com";
-
 export async function POST(request: Request) {
   let body: unknown;
   try {
@@ -32,6 +30,19 @@ export async function POST(request: Request) {
 
   const { fullName, email, message } = parsed.data;
 
+  const adminEmails = (process.env.ADMIN_EMAIL ?? "")
+    .split(",")
+    .map((addr) => addr.trim())
+    .filter(Boolean);
+
+  if (adminEmails.length === 0) {
+    console.error("ADMIN_EMAIL is not configured.");
+    return NextResponse.json(
+      { success: false, error: "Something went wrong." },
+      { status: 500 }
+    );
+  }
+
   if (!process.env.RESEND_API_KEY) {
     console.error("RESEND_API_KEY is not configured.");
     return NextResponse.json(
@@ -45,7 +56,7 @@ export async function POST(request: Request) {
   try {
     const { error } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || "Almera <onboarding@resend.dev>",
-      to: CONTACT_RECIPIENT,
+      to: adminEmails,
       replyTo: email,
       subject: "New Contact Form - Almera",
       text: `Name: ${fullName}\n\nEmail: ${email}\n\nMessage:\n${message}`,

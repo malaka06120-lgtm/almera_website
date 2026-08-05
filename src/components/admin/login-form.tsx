@@ -12,6 +12,18 @@ import { Label } from "@/components/ui/label";
 import { loginSchema, type LoginFormValues } from "@/lib/validations";
 import { login } from "@/lib/actions/auth";
 
+/**
+ * Only allow same-app relative paths (e.g. "/admin/orders"). Without this,
+ * an attacker-crafted `?redirectTo=https://evil.com` would let router.push
+ * send a just-authenticated admin off-site — a classic open-redirect.
+ */
+function getSafeRedirect(redirectTo: string | null): string {
+  if (!redirectTo || !redirectTo.startsWith("/") || redirectTo.startsWith("//")) {
+    return "/admin";
+  }
+  return redirectTo;
+}
+
 export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -25,7 +37,7 @@ export function LoginForm() {
   async function onSubmit(values: LoginFormValues) {
     const result = await login(values);
     if (result.success) {
-      router.push(searchParams.get("redirectTo") || "/admin");
+      router.push(getSafeRedirect(searchParams.get("redirectTo")));
       router.refresh();
     } else {
       toast.error(result.error);
