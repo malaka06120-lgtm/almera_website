@@ -41,6 +41,7 @@ export interface Product {
   is_featured: boolean;
   is_best_seller: boolean;
   is_original: boolean;
+  is_tester: boolean;
   is_active: boolean;
   created_at: string;
   updated_at: string;

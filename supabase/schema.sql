@@ -45,6 +45,7 @@ create table products (
   is_featured boolean not null default false,
   is_best_seller boolean not null default false,
   is_original boolean not null default false,
+  is_tester boolean not null default false,
   is_active boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -55,6 +56,7 @@ create index products_gender_idx on products (gender);
 create index products_is_featured_idx on products (is_featured) where is_featured;
 create index products_is_best_seller_idx on products (is_best_seller) where is_best_seller;
 create index products_is_original_idx on products (is_original) where is_original;
+create index products_is_tester_idx on products (is_tester) where is_tester;
 
 -- ============================================================================
 -- PRODUCT VARIANTS (size / price / stock)

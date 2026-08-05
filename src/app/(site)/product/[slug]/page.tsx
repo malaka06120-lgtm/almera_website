@@ -65,6 +65,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {product.is_best_seller && <Badge variant="gold">Best Seller</Badge>}
             {product.is_featured && <Badge>Featured</Badge>}
             {product.is_original && <Badge variant="gold-outline">Original</Badge>}
+            {product.is_tester && (
+              <span className="text-almera-gold text-xs font-medium tracking-luxury uppercase">
+                Tester
+              </span>
+            )}
             <span className="text-muted-foreground text-xs tracking-luxury uppercase">
               {GENDER_LABELS[product.gender]}
               {product.category && ` · ${product.category.name}`}

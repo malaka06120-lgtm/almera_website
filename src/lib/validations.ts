@@ -54,6 +54,7 @@ export const productSchema = z.object({
   isFeatured: z.boolean(),
   isBestSeller: z.boolean(),
   isOriginal: z.boolean(),
+  isTester: z.boolean(),
   isActive: z.boolean(),
   variants: z.array(productVariantSchema).min(1, "Add at least one size"),
 });

@@ -51,6 +51,11 @@ export function ProductCard({ product }: { product: Product }) {
               Original
             </Badge>
           )}
+          {product.is_tester && (
+            <span className="text-[11px] font-medium tracking-wider text-white uppercase drop-shadow-sm">
+              Tester
+            </span>
+          )}
           {totalStock === 0 && <Badge variant="destructive">Sold Out</Badge>}
         </div>
 

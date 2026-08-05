@@ -64,6 +64,7 @@ export function ProductForm({
           isFeatured: product.is_featured,
           isBestSeller: product.is_best_seller,
           isOriginal: product.is_original,
+          isTester: product.is_tester,
           isActive: product.is_active,
           variants: (product.variants ?? []).map((v) => ({
             id: v.id,
@@ -85,6 +86,7 @@ export function ProductForm({
           isFeatured: false,
           isBestSeller: false,
           isOriginal: false,
+          isTester: false,
           isActive: true,
           variants: [{ sizeMl: 50, price: 0, stockQuantity: 0 }],
         },
@@ -250,6 +252,16 @@ export function ProductForm({
           <Switch
             checked={watch("isOriginal")}
             onCheckedChange={(v) => setValue("isOriginal", v)}
+          />
+        </label>
+        <label className="flex items-center justify-between border border-border/70 p-4">
+          <div>
+            <p className="text-sm font-medium">Tester</p>
+            <p className="text-muted-foreground text-xs">Show a &ldquo;Tester&rdquo; label on this product</p>
+          </div>
+          <Switch
+            checked={watch("isTester")}
+            onCheckedChange={(v) => setValue("isTester", v)}
           />
         </label>
         <label className="flex items-center justify-between border border-border/70 p-4">

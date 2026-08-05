@@ -86,7 +86,7 @@ export default async function AdminProductsPage({
                       </div>
                       <div>
                         <p className="font-medium">{product.name}</p>
-                        <div className="mt-1 flex flex-wrap gap-1">
+                        <div className="mt-1 flex flex-wrap items-center gap-1.5">
                           {product.is_featured && (
                             <Badge className="text-[10px]">Featured</Badge>
                           )}
@@ -99,6 +99,11 @@ export default async function AdminProductsPage({
                             <Badge variant="gold-outline" className="text-[10px]">
                               Original
                             </Badge>
+                          )}
+                          {product.is_tester && (
+                            <span className="text-almera-gold text-[10px] font-medium tracking-wider uppercase">
+                              Tester
+                            </span>
                           )}
                         </div>
                       </div>
