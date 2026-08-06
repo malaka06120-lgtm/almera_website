@@ -39,9 +39,9 @@ export function AddToCartForm({ product }: { product: Product }) {
       stockQuantity: selectedVariant.stock_quantity,
     });
     trackAddToCart({
-      product_id: product.id,
-      product_name: product.name,
-      category,
+      item_id: product.id,
+      item_name: product.name,
+      item_category: category,
       price: selectedVariant.price,
       quantity,
     });

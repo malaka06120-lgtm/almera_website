@@ -3,18 +3,18 @@
 /**
  * Reusable GA4 ecommerce event helpers. Event names follow GA4's official
  * ecommerce naming (view_item, add_to_cart, remove_from_cart,
- * begin_checkout, purchase); each item in the payload carries product_id,
- * product_name, category, price, and quantity, with currency and a total
- * value at the top level.
+ * begin_checkout, purchase); each item in the payload carries GA4's
+ * standard item_id, item_name, item_category, price, and quantity
+ * parameters, with currency and a total value at the top level.
  *
  * Every helper no-ops safely if gtag hasn't loaded (NEXT_PUBLIC_GA_ID
  * unset, ad blockers, or during SSR) — callers never need to guard.
  */
 
 export interface EcommerceProduct {
-  product_id: string;
-  product_name: string;
-  category: string;
+  item_id: string;
+  item_name: string;
+  item_category: string;
   price: number;
   quantity: number;
 }
@@ -29,9 +29,9 @@ declare global {
 
 function toGtagItem(product: EcommerceProduct) {
   return {
-    product_id: product.product_id,
-    product_name: product.product_name,
-    category: product.category,
+    item_id: product.item_id,
+    item_name: product.item_name,
+    item_category: product.item_category,
     price: product.price,
     quantity: product.quantity,
   };

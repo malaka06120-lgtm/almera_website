@@ -9,7 +9,7 @@ export function ProductViewTracker({ product }: { product: EcommerceProduct }) {
   React.useEffect(() => {
     trackProductViewed(product);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product.product_id]);
+  }, [product.item_id]);
 
   return null;
 }

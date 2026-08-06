@@ -24,9 +24,9 @@ export function CartSheet() {
 
   function handleRemove(item: CartItem) {
     trackRemoveFromCart({
-      product_id: item.productId,
-      product_name: item.name,
-      category: item.category,
+      item_id: item.productId,
+      item_name: item.name,
+      item_category: item.category,
       price: item.price,
       quantity: item.quantity,
     });

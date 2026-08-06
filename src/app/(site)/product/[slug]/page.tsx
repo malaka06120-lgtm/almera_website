@@ -58,9 +58,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <ProductViewTracker
         product={{
-          product_id: product.id,
-          product_name: product.name,
-          category: product.category?.name ?? "Uncategorized",
+          item_id: product.id,
+          item_name: product.name,
+          item_category: product.category?.name ?? "Uncategorized",
           price: minPrice,
           quantity: 1,
         }}
