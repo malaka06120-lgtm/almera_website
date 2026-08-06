@@ -97,11 +97,11 @@ export default function CheckoutPage() {
       </span>
       <h1 className="font-heading mt-2 mb-12 text-4xl">Checkout</h1>
 
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_380px]">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="shadow-luxury-sm flex flex-col gap-6 rounded-2xl border border-border/70 bg-white p-7 sm:p-9"
-        >
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_380px]"
+      >
+        <div className="shadow-luxury-sm flex flex-col gap-6 rounded-2xl border border-border/70 bg-white p-7 sm:p-9">
           <div>
             <h2 className="font-heading mb-4 text-xl">Delivery Details</h2>
             <p className="text-muted-foreground mb-6 text-sm">
@@ -190,12 +190,7 @@ export default function CheckoutPage() {
             <span className="font-medium">Payment Method:</span> Cash on
             Delivery — pay when your order arrives.
           </div>
-
-          <Button type="submit" size="lg" disabled={isSubmitting} className="mt-2">
-            {isSubmitting && <Loader2 className="size-4 animate-spin" />}
-            Place Order
-          </Button>
-        </form>
+        </div>
 
         <div className="shadow-luxury-sm h-fit rounded-2xl border border-border/70 bg-white p-7">
           <h2 className="font-heading text-xl">Order Summary</h2>
@@ -249,8 +244,13 @@ export default function CheckoutPage() {
               {formatPrice(sub + deliveryFee)}
             </span>
           </div>
+
+          <Button type="submit" size="lg" disabled={isSubmitting} className="mt-6 w-full">
+            {isSubmitting && <Loader2 className="size-4 animate-spin" />}
+            Place Order
+          </Button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }
