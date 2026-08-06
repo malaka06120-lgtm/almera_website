@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Jost } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 const heading = Playfair_Display({
   subsets: ["latin"],
@@ -80,6 +83,23 @@ export default function RootLayout({
             <Toaster position="bottom-right" richColors closeButton />
           </TooltipProvider>
         </ThemeProvider>
+
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );

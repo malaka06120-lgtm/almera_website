@@ -113,6 +113,7 @@ cp .env.local.example .env.local
 | `RESEND_API_KEY` | `/api/contact`, order notification emails | resend.com/api-keys |
 | `RESEND_FROM_EMAIL` | Same as above | Optional — defaults to `Almera <onboarding@resend.dev>` |
 | `ADMIN_EMAIL` | `/api/contact`, order notification emails | Comma-separated for multiple recipients (requires a verified domain — see above) |
+| `NEXT_PUBLIC_GA_ID` | `src/app/layout.tsx` (Google Analytics) | Optional — Measurement ID from GA4 (`G-XXXXXXXXXX`). Analytics is skipped entirely if unset. |
 
 ### 5. Run the dev server
 
