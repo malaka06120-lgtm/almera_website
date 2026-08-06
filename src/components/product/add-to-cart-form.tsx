@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { cn, formatPrice } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
+import { trackAddToCart } from "@/lib/analytics/ecommerce";
 import type { Product } from "@/types";
 
 export function AddToCartForm({ product }: { product: Product }) {
@@ -24,16 +25,25 @@ export function AddToCartForm({ product }: { product: Product }) {
 
   function handleAddToCart() {
     if (!selectedVariant) return;
+    const category = product.category?.name ?? "Uncategorized";
     addItem({
       productId: product.id,
       variantId: selectedVariant.id,
       name: product.name,
       slug: product.slug,
       image: product.images?.[0] ?? "",
+      category,
       sizeMl: selectedVariant.size_ml,
       price: selectedVariant.price,
       quantity,
       stockQuantity: selectedVariant.stock_quantity,
+    });
+    trackAddToCart({
+      product_id: product.id,
+      product_name: product.name,
+      category,
+      price: selectedVariant.price,
+      quantity,
     });
     toast.success(`${product.name} added to your bag`);
   }

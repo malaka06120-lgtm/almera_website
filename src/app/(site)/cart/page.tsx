@@ -10,11 +10,24 @@ import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatPrice } from "@/lib/utils";
 import { FREE_SHIPPING_THRESHOLD } from "@/lib/delivery-areas";
+import { trackRemoveFromCart } from "@/lib/analytics/ecommerce";
+import type { CartItem } from "@/types";
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, subtotal, hasHydrated } = useCartStore();
   const sub = subtotal();
   const qualifiesForFreeShipping = sub >= FREE_SHIPPING_THRESHOLD;
+
+  function handleRemove(item: CartItem) {
+    trackRemoveFromCart({
+      product_id: item.productId,
+      product_name: item.name,
+      category: item.category,
+      price: item.price,
+      quantity: item.quantity,
+    });
+    removeItem(item.variantId);
+  }
 
   if (!hasHydrated) {
     return (
@@ -74,7 +87,7 @@ export default function CartPage() {
                     {item.name}
                   </Link>
                   <button
-                    onClick={() => removeItem(item.variantId)}
+                    onClick={() => handleRemove(item)}
                     aria-label="Remove item"
                     className="text-muted-foreground hover:text-foreground"
                   >

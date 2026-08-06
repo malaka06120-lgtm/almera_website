@@ -30,11 +30,30 @@ import { createOrder } from "@/lib/actions/orders";
 import { DELIVERY_FEE_GROUPS, calculateDeliveryFee } from "@/lib/delivery-areas";
 import { formatPrice } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
+import { trackBeginCheckout, trackPurchase } from "@/lib/analytics/ecommerce";
+import type { CartItem } from "@/types";
+
+function toEcommerceProducts(cartItems: CartItem[]) {
+  return cartItems.map((item) => ({
+    product_id: item.productId,
+    product_name: item.name,
+    category: item.category,
+    price: item.price,
+    quantity: item.quantity,
+  }));
+}
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, subtotal, clearCart, hasHydrated } = useCartStore();
   const sub = subtotal();
+  const beginCheckoutFired = React.useRef(false);
+
+  React.useEffect(() => {
+    if (!hasHydrated || items.length === 0 || beginCheckoutFired.current) return;
+    beginCheckoutFired.current = true;
+    trackBeginCheckout(toEcommerceProducts(items));
+  }, [hasHydrated, items]);
 
   const {
     register,
@@ -57,6 +76,7 @@ export default function CheckoutPage() {
     );
 
     if (result.success) {
+      trackPurchase(result.orderNumber, toEcommerceProducts(items), sub + deliveryFee);
       clearCart();
       router.push(`/order-success/${result.orderId}`);
     } else {

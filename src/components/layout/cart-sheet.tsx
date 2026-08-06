@@ -15,10 +15,23 @@ import {
   SheetFooter,
 } from "@/components/ui/sheet";
 import { formatPrice } from "@/lib/utils";
+import { trackRemoveFromCart } from "@/lib/analytics/ecommerce";
+import type { CartItem } from "@/types";
 
 export function CartSheet() {
   const { items, isOpen, setOpen, removeItem, updateQuantity, subtotal } =
     useCartStore();
+
+  function handleRemove(item: CartItem) {
+    trackRemoveFromCart({
+      product_id: item.productId,
+      product_name: item.name,
+      category: item.category,
+      price: item.price,
+      quantity: item.quantity,
+    });
+    removeItem(item.variantId);
+  }
 
   return (
     <Sheet open={isOpen} onOpenChange={setOpen}>
@@ -67,7 +80,7 @@ export function CartSheet() {
                           {item.name}
                         </Link>
                         <button
-                          onClick={() => removeItem(item.variantId)}
+                          onClick={() => handleRemove(item)}
                           aria-label="Remove item"
                           className="text-muted-foreground hover:text-foreground shrink-0"
                         >

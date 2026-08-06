@@ -16,6 +16,7 @@ import { AddToCartForm } from "@/components/product/add-to-cart-form";
 import { ProductReviews } from "@/components/product/product-reviews";
 import { WishlistButton } from "@/components/product/wishlist-button";
 import { ProductGrid } from "@/components/product/product-grid";
+import { ProductViewTracker } from "@/components/product/product-view-tracker";
 import { FadeUp } from "@/components/shared/motion";
 import { GENDER_LABELS } from "@/lib/constants";
 import {
@@ -55,6 +56,15 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <ProductViewTracker
+        product={{
+          product_id: product.id,
+          product_name: product.name,
+          category: product.category?.name ?? "Uncategorized",
+          price: minPrice,
+          quantity: 1,
+        }}
+      />
       <div className="grid grid-cols-1 gap-14 lg:grid-cols-2">
         <FadeUp>
           <ProductGallery images={product.images} name={product.name} />
