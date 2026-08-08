@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { cn, formatPrice } from "@/lib/utils";
 import { useCartStore } from "@/store/cart-store";
 import { trackAddToCart } from "@/lib/analytics/ecommerce";
+import { trackAddToCart as trackMetaAddToCart } from "@/lib/analytics/meta-pixel";
 import type { Product } from "@/types";
 
 export function AddToCartForm({ product }: { product: Product }) {
@@ -43,6 +44,13 @@ export function AddToCartForm({ product }: { product: Product }) {
       item_name: product.name,
       item_category: category,
       price: selectedVariant.price,
+      quantity,
+    });
+    trackMetaAddToCart({
+      content_id: product.id,
+      content_name: product.name,
+      content_category: category,
+      value: selectedVariant.price * quantity,
       quantity,
     });
     toast.success(`${product.name} added to your bag`);

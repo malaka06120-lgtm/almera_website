@@ -31,6 +31,10 @@ import { DELIVERY_FEE_GROUPS, calculateDeliveryFee } from "@/lib/delivery-areas"
 import { formatPrice } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { trackBeginCheckout, trackPurchase } from "@/lib/analytics/ecommerce";
+import {
+  trackInitiateCheckout as trackMetaInitiateCheckout,
+  trackPurchase as trackMetaPurchase,
+} from "@/lib/analytics/meta-pixel";
 import type { CartItem } from "@/types";
 
 function toEcommerceProducts(cartItems: CartItem[]) {
@@ -39,6 +43,16 @@ function toEcommerceProducts(cartItems: CartItem[]) {
     item_name: item.name,
     item_category: item.category,
     price: item.price,
+    quantity: item.quantity,
+  }));
+}
+
+function toMetaPixelProducts(cartItems: CartItem[]) {
+  return cartItems.map((item) => ({
+    content_id: item.productId,
+    content_name: item.name,
+    content_category: item.category,
+    value: item.price,
     quantity: item.quantity,
   }));
 }
@@ -53,7 +67,8 @@ export default function CheckoutPage() {
     if (!hasHydrated || items.length === 0 || beginCheckoutFired.current) return;
     beginCheckoutFired.current = true;
     trackBeginCheckout(toEcommerceProducts(items));
-  }, [hasHydrated, items]);
+    trackMetaInitiateCheckout(toMetaPixelProducts(items), sub);
+  }, [hasHydrated, items, sub]);
 
   const {
     register,
@@ -76,7 +91,9 @@ export default function CheckoutPage() {
     );
 
     if (result.success) {
-      trackPurchase(result.orderNumber, toEcommerceProducts(items), sub + deliveryFee);
+      const orderTotal = sub + deliveryFee;
+      trackPurchase(result.orderNumber, toEcommerceProducts(items), orderTotal);
+      trackMetaPurchase(result.orderNumber, toMetaPixelProducts(items), orderTotal);
       clearCart();
       router.push(`/order-success/${result.orderId}`);
     } else {
